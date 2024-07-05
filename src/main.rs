@@ -1,7 +1,8 @@
 use egui::{Context, Frame, RichText};
 use egui_plot::{PlotPoint, Text};
+use symbol::{Symbol, SymbolKind};
 
-mod gate;
+mod symbol;
 
 fn main() {
     let options = eframe::NativeOptions {
@@ -20,11 +21,10 @@ impl Yoyo {
 }
 
 impl eframe::App for Yoyo {
-    fn update(&mut self, ctx: &Context, frame: &mut eframe::Frame) {
+    fn update(&mut self, ctx: &Context, _frame: &mut eframe::Frame) {
         egui::CentralPanel::default()
             .frame(Frame::none())
             .show(ctx, |ui| {
-                // ui.add(Gate { ty: GateType::And });
                 egui_plot::Plot::new("yoyo_visualizer")
                     .show_axes(false)
                     .data_aspect(1.)
@@ -33,7 +33,12 @@ impl eframe::App for Yoyo {
                     .show_y(false)
                     .show(ui, |pui| {
                         pui.text(Text::new(PlotPoint::new(15, 13), RichText::new("clk")));
-                    })
+                        pui.add(Symbol {
+                            kind: SymbolKind::And,
+                            position: PlotPoint::new(0, 0),
+                            highlight: false,
+                        });
+                    });
             });
     }
 }
