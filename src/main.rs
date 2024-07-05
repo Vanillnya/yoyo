@@ -9,7 +9,7 @@ fn main() {
         viewport: egui::ViewportBuilder::default().with_title("yoyo"),
         ..Default::default()
     };
-    eframe::run_native("yoyo", options, Box::new(|_cc| Box::new(Yoyo::new()))).unwrap();
+    eframe::run_native("yoyo", options, Box::new(|_cc| Ok(Box::new(Yoyo::new())))).unwrap();
 }
 
 pub struct Yoyo {}

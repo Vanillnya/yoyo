@@ -49,6 +49,10 @@ impl PlotItem for Symbol {
         self.highlight
     }
 
+    fn allow_hover(&self) -> bool {
+        false
+    }
+
     fn geometry(&self) -> PlotGeometry<'_> {
         PlotGeometry::None
     }
