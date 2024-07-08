@@ -1,7 +1,9 @@
-use egui::{Context, Frame, RichText};
+use egui::{include_image, Context, Frame, RichText, Vec2};
 use egui_plot::{PlotPoint, Text};
-use symbol::{Symbol, SymbolKind};
+use plot_symbol::PlotSymbol;
 
+mod plot_symbol;
+mod skin;
 mod symbol;
 
 fn main() {
@@ -9,7 +11,15 @@ fn main() {
         viewport: egui::ViewportBuilder::default().with_title("yoyo"),
         ..Default::default()
     };
-    eframe::run_native("yoyo", options, Box::new(|_cc| Ok(Box::new(Yoyo::new())))).unwrap();
+    eframe::run_native(
+        "yoyo",
+        options,
+        Box::new(|cc| {
+            egui_extras::install_image_loaders(&cc.egui_ctx);
+            Ok(Box::new(Yoyo::new()))
+        }),
+    )
+    .unwrap();
 }
 
 pub struct Yoyo {}
@@ -33,10 +43,13 @@ impl eframe::App for Yoyo {
                     .show_y(false)
                     .show(ui, |pui| {
                         pui.text(Text::new(PlotPoint::new(15, 13), RichText::new("clk")));
-                        pui.add(Symbol {
-                            kind: SymbolKind::And,
+                        pui.add(PlotSymbol {
+                            source: include_image!("../assets/skins/digital/ugly_boxes/and.svg"),
                             position: PlotPoint::new(0, 0),
+                            size: Vec2::splat(30.),
                             highlight: false,
+                            name: "Andgate".to_owned(),
+                            id: None,
                         });
                     });
             });

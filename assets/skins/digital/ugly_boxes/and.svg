@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<svg width="100mm" height="100mm" version="1.1" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+ <g>
+  <rect x="11.1" y="27.054" width="77.801" height="45.892" ry="4.1912" fill="#a7a7a7" stroke="#000" stroke-linejoin="round" stroke-width="2" style="paint-order:markers stroke fill"/>
+  <text x="23.376348" y="58.977043" fill="#000000" font-family="sans-serif" font-size="24.694px" stroke-width=".26458" style="line-height:1.25" xml:space="preserve"><tspan x="23.376348" y="58.977043" font-size="24.694px" stroke-width=".26458">AND</tspan></text>
+  <g>
+   <circle cx="10.583" cy="37.914" r="1.6325" style="paint-order:stroke markers fill"/>
+   <circle cx="10.631" cy="62.973" r="1.6325" style="paint-order:stroke markers fill"/>
+   <circle cx="89.369" cy="50" r="1.6325" style="paint-order:stroke markers fill"/>
+  </g>
+ </g>
+</svg>
