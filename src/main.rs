@@ -1,4 +1,4 @@
-use egui::{include_image, Context, Frame, RichText, Vec2};
+use egui::{include_image, Context, Frame, RichText, Vec2, Visuals};
 use egui_plot::{PlotPoint, Text};
 use plot_symbol::PlotSymbol;
 
@@ -35,6 +35,7 @@ impl eframe::App for Yoyo {
         egui::CentralPanel::default()
             .frame(Frame::none())
             .show(ctx, |ui| {
+                ui.style_mut().visuals = Visuals::light();
                 egui_plot::Plot::new("yoyo_visualizer")
                     .show_axes(false)
                     .data_aspect(1.)
@@ -42,11 +43,11 @@ impl eframe::App for Yoyo {
                     .show_x(false)
                     .show_y(false)
                     .show(ui, |pui| {
-                        pui.text(Text::new(PlotPoint::new(15, 13), RichText::new("clk")));
+                        pui.text(Text::new(PlotPoint::new(1.5, 1.5), RichText::new("clk").text_style(egui::TextStyle::Body)));
                         pui.add(PlotSymbol {
-                            source: include_image!("../assets/skins/digital/ugly_boxes/and.svg"),
-                            position: PlotPoint::new(0, 0),
-                            size: Vec2::splat(30.),
+                            source: include_image!("../assets/skins/digital/wikipedia_inductiveload/AND_ANSI_Labelled.svg"),
+                            position: PlotPoint::new(0.5, 0.5),
+                            size: Vec2::new(1.2, 0.5),
                             highlight: false,
                             name: "Andgate".to_owned(),
                             id: None,
