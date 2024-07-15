@@ -3741,6 +3741,7 @@ dependencies = [
  "egui",
  "egui_extras",
  "egui_plot",
+ "slotmap",
 ]
 
 [[package]]

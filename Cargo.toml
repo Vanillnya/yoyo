@@ -8,3 +8,4 @@ eframe = "0.28.1"
 egui = "0.28.1"
 egui_extras = { version = "0.28.1", features = ["svg"] }
 egui_plot = "0.28.1"
+slotmap = "1.0.7"

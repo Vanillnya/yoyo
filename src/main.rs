@@ -2,6 +2,7 @@ use egui::{include_image, Context, Frame, RichText, Vec2, Visuals};
 use egui_plot::{PlotPoint, Text};
 use plot_symbol::PlotSymbol;
 
+mod circut;
 mod plot_symbol;
 mod skin;
 mod symbol;
