@@ -1,6 +1,7 @@
 use egui::{include_image, Context, Frame, RichText, Vec2, Visuals};
 use egui_plot::{PlotPoint, Text};
 use plot_symbol::PlotSymbol;
+use tracing_subscriber::fmt::time;
 
 mod circut;
 mod plot_symbol;
@@ -8,6 +9,10 @@ mod skin;
 mod symbol;
 
 fn main() {
+    tracing_subscriber::fmt()
+        .with_timer(time::LocalTime::rfc_3339())
+        .init();
+
     let options = eframe::NativeOptions {
         viewport: egui::ViewportBuilder::default().with_title("yoyo"),
         ..Default::default()
