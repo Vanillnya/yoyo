@@ -1,6 +1,6 @@
 use slotmap::SecondaryMap;
 
-use crate::circut::{Circut, CircutNode};
+use crate::circut::{Bfs, Circut, CircutNode};
 
 pub struct CircutLayout {
     positions: SecondaryMap<CircutNode, (f32, f32)>,
@@ -8,6 +8,25 @@ pub struct CircutLayout {
 
 impl CircutLayout {
     pub fn layout(circut: &Circut) -> Self {
+        let mut end_distance = SecondaryMap::new();
+
+        let bfs = Bfs::with_starters(
+            circut,
+            circut.sinks().map(|node| (node, 0 as usize)),
+            |c, n, acc| {
+                let data = acc + 1;
+                c.inputs[n]
+                    .iter()
+                    .flatten()
+                    .map(move |&(node, _)| (node, data))
+            },
+        );
+
+        for (node, distance) in bfs {
+            end_distance.insert(node, distance);
+            println!("{node:?} {distance}");
+        }
+
         Self {
             positions: SecondaryMap::new(),
         }
@@ -37,5 +56,7 @@ mod tests {
         circut.connect((nor2, 0), (not_q, 0));
 
         let layout = CircutLayout::layout(&circut);
+
+        //panic!()
     }
 }
