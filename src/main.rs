@@ -4,6 +4,7 @@ use plot_symbol::PlotSymbol;
 use tracing_subscriber::fmt::time;
 
 mod circut;
+mod layout;
 mod plot_symbol;
 mod skin;
 mod symbol;
