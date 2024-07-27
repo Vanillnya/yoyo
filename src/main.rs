@@ -1,6 +1,10 @@
+use circut::Circut;
 use egui::{include_image, Context, Frame, RichText, Vec2, Visuals};
 use egui_plot::{PlotPoint, Text};
+use layout::CircutLayout;
 use plot_symbol::PlotSymbol;
+use skin::Skin;
+use symbol::SymbolKind;
 use tracing_subscriber::fmt::time;
 
 mod circut;
@@ -29,11 +33,24 @@ fn main() {
     .unwrap();
 }
 
-pub struct Yoyo {}
+pub struct Yoyo {
+    skin: Skin,
+    circut: Circut,
+    layout: CircutLayout,
+}
 
 impl Yoyo {
     pub fn new() -> Self {
-        Self {}
+        let skin = Skin::new();
+
+        let circut = layout::constructs::sr_latch();
+        let layout = CircutLayout::layout(&circut);
+
+        Self {
+            skin,
+            circut,
+            layout,
+        }
     }
 }
 
@@ -50,15 +67,45 @@ impl eframe::App for Yoyo {
                     .show_x(false)
                     .show_y(false)
                     .show(ui, |pui| {
-                        pui.text(Text::new(PlotPoint::new(1.5, 1.5), RichText::new("clk").text_style(egui::TextStyle::Body)));
-                        pui.add(PlotSymbol {
-                            source: include_image!("../assets/skins/digital/wikipedia_inductiveload/AND_ANSI_Labelled.svg"),
-                            position: PlotPoint::new(0.5, 0.5),
-                            size: Vec2::new(1.2, 0.5),
-                            highlight: false,
-                            name: "Andgate".to_owned(),
-                            id: None,
-                        });
+                        for node in &self.circut.nodes {
+                            let position = self.layout.positions[node.0];
+                            let position = PlotPoint::new(position.0, position.1);
+
+                            match node.1.symbol {
+                                SymbolKind::Input => {
+                                    pui.text(Text::new(
+                                        position,
+                                        RichText::new("in").text_style(egui::TextStyle::Body),
+                                    ));
+                                }
+                                SymbolKind::Output => {
+                                    pui.text(Text::new(
+                                        position,
+                                        RichText::new("out").text_style(egui::TextStyle::Body),
+                                    ));
+                                }
+                                SymbolKind::And => {
+                                    pui.add(PlotSymbol {
+                                        source: self.skin.and.clone(),
+                                        position,
+                                        size: Vec2::new(1.2, 0.5),
+                                        highlight: false,
+                                        name: format!("and{:?}", node.0),
+                                        id: None,
+                                    });
+                                }
+                                SymbolKind::Nor => {
+                                    pui.add(PlotSymbol {
+                                        source: self.skin.nor.clone(),
+                                        position,
+                                        size: Vec2::new(1.2, 0.5),
+                                        highlight: false,
+                                        name: format!("and{:?}", node.0),
+                                        id: None,
+                                    });
+                                }
+                            }
+                        }
                     });
             });
     }

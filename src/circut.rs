@@ -1,16 +1,20 @@
-use std::{collections::VecDeque, marker::PhantomData};
+use std::collections::VecDeque;
 
 use egui::ahash::{HashSet, HashSetExt};
 use slotmap::{new_key_type, SecondaryMap, SlotMap};
+
+use crate::symbol::SymbolKind;
 
 new_key_type! {
     pub struct CircutNode;
 }
 
-pub struct CircutItem;
+pub struct CircutItem {
+    pub symbol: SymbolKind,
+}
 
 pub struct Circut {
-    nodes: SlotMap<CircutNode, CircutItem>,
+    pub(crate) nodes: SlotMap<CircutNode, CircutItem>,
     /// Inputs of a node, with the source node and its ouput index, if connected.
     pub(crate) inputs: SecondaryMap<CircutNode, Vec<Option<(CircutNode, usize)>>>,
     /// Outputs of a node, with the destination nodes and their input indices.

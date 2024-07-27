@@ -1,13 +1,19 @@
 use std::fmt::Display;
 
 pub enum SymbolKind {
+    Input,
+    Output,
     And,
+    Nor,
 }
 
 impl SymbolKind {
     pub fn name(&self) -> &str {
         match self {
+            SymbolKind::Input => "Input",
+            SymbolKind::Output => "Output",
             SymbolKind::And => "And",
+            SymbolKind::Nor => "Nor",
         }
     }
 }
